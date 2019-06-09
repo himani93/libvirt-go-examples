@@ -5,12 +5,15 @@ import (
 	libvirt "github.com/libvirt/libvirt-go"
 )
 
-func connect() {
-	fmt.Println("connect")
+func getHostname() {
 	conn, err := libvirt.NewConnect("qemu:///system")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("close")
+
+	host_name, _ := conn.GetHostname()
+
+	fmt.Printf("Host Name: %s\n", host_name)
+
 	conn.Close()
 }
