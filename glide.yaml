@@ -1,0 +1,4 @@
+package: libvirt-go-examples
+import:
+- package: github.com/libvirt/libvirt-go
+  version: ^5.2.0
