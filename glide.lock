@@ -1,6 +1,8 @@
 hash: d9bcc97225f1d727870221a5bd37d65468b1c9d9d8cfe12513c4bf0839530135
-updated: 2019-06-09T17:03:04.880668349+05:30
+updated: 2019-06-10T00:01:55.996000639+05:30
 imports:
 - name: github.com/libvirt/libvirt-go
   version: 6716ded296d94320213e1b57b67c2c7d255c6f00
+- name: github.com/libvirt/libvirt-go-xml
+  version: 162ef4dd6b365d99715223672c7a2445bd582f75
 testImports: []
