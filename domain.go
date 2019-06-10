@@ -42,6 +42,11 @@ func domainDef() {
 				Type: "hvm",
 			},
 		},
+		Devices: &libvirtxml.DomainDeviceList{
+			Disks: []libvirtxml.DomainDisk{
+				Source: "/home/whitebyte/iso/CentOS-7-x86_64-Minimal-1810.iso",
+			},
+		},
 	}
 	xmldoc, err = domcfg.Marshal()
 	if err != nil {
