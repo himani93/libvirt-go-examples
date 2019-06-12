@@ -29,7 +29,7 @@ func domainDef() {
 
 	domcfg = &libvirtxml.Domain{
 		Type: "qemu",
-		Name: "Eddie",
+		Name: "Eddie1",
 		Memory: &libvirtxml.DomainMemory{
 			Value: 4,
 			Unit:  "GB",
@@ -44,7 +44,16 @@ func domainDef() {
 		},
 		Devices: &libvirtxml.DomainDeviceList{
 			Disks: []libvirtxml.DomainDisk{
-				Source: "/home/whitebyte/iso/CentOS-7-x86_64-Minimal-1810.iso",
+				libvirtxml.DomainDisk{
+					Source: &libvirtxml.DomainDiskSource{
+						File: &libvirtxml.DomainDiskSourceFile{
+							File: "/home/whitebyte/iso/CentOS-7-x86_64-Minimal-1810.iso",
+						},
+					},
+					Target: &libvirtxml.DomainDiskTarget{
+						Dev: "sda",
+					},
+				},
 			},
 		},
 	}
