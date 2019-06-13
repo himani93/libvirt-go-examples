@@ -29,7 +29,7 @@ func domainDef() {
 
 	domcfg = &libvirtxml.Domain{
 		Type: "qemu",
-		Name: "Eddie1",
+		Name: "Eddie4",
 		Memory: &libvirtxml.DomainMemory{
 			Value: 4,
 			Unit:  "GB",
@@ -43,15 +43,46 @@ func domainDef() {
 			},
 		},
 		Devices: &libvirtxml.DomainDeviceList{
+			Emulator: "/usr/bin/kvm-spice",
 			Disks: []libvirtxml.DomainDisk{
 				libvirtxml.DomainDisk{
 					Source: &libvirtxml.DomainDiskSource{
 						File: &libvirtxml.DomainDiskSourceFile{
-							File: "/home/whitebyte/iso/CentOS-7-x86_64-Minimal-1810.iso",
+							File: "/home/whitebyte/iso/eddie4.iso",
 						},
 					},
 					Target: &libvirtxml.DomainDiskTarget{
 						Dev: "sda",
+					},
+				},
+			},
+			Serials: []libvirtxml.DomainSerial{
+				libvirtxml.DomainSerial{
+					Protocol: &libvirtxml.DomainChardevProtocol{
+						Type: "serial",
+					},
+					Target: &libvirtxml.DomainSerialTarget{
+						Port: new(uint),
+					},
+				},
+			},
+			Consoles: []libvirtxml.DomainConsole{
+				libvirtxml.DomainConsole{
+					Target: &libvirtxml.DomainConsoleTarget{
+						Type: "serial",
+						Port: new(uint),
+					},
+				},
+				libvirtxml.DomainConsole{
+					Target: &libvirtxml.DomainConsoleTarget{
+						Type: "virtio",
+					},
+				},
+			},
+			Graphics: []libvirtxml.DomainGraphic{
+				libvirtxml.DomainGraphic{
+					Spice: &libvirtxml.DomainGraphicSpice{
+						AutoPort: "yes",
 					},
 				},
 			},
