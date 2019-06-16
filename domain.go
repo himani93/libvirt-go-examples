@@ -26,10 +26,10 @@ func domainDef() {
 		panic(err)
 	}
 	fmt.Printf("XML: %s\n", xmldoc)
-
+	bootOrder := uint(1)
 	domcfg = &libvirtxml.Domain{
 		Type: "qemu",
-		Name: "Eddie4",
+		Name: "Eddie10",
 		Memory: &libvirtxml.DomainMemory{
 			Value: 4,
 			Unit:  "GB",
@@ -46,13 +46,32 @@ func domainDef() {
 			Emulator: "/usr/bin/kvm-spice",
 			Disks: []libvirtxml.DomainDisk{
 				libvirtxml.DomainDisk{
+					Device: "disk",
 					Source: &libvirtxml.DomainDiskSource{
 						File: &libvirtxml.DomainDiskSourceFile{
-							File: "/home/whitebyte/iso/eddie4.iso",
+							File: "/home/whitebyte/libvirt-experiments/images/bionic-10.qcow2",
 						},
 					},
 					Target: &libvirtxml.DomainDiskTarget{
-						Dev: "sda",
+						Dev: "hda",
+					},
+					Boot: &libvirtxml.DomainDeviceBoot{
+						Order: bootOrder,
+					},
+					Driver: &libvirtxml.DomainDiskDriver{
+						Name: "qemu",
+						Type: "qcow2",
+					},
+				},
+				libvirtxml.DomainDisk{
+					Device: "cdrom",
+					Source: &libvirtxml.DomainDiskSource{
+						File: &libvirtxml.DomainDiskSourceFile{
+							File: "/home/whitebyte/libvirt-experiments/images/user-data.img",
+						},
+					},
+					Target: &libvirtxml.DomainDiskTarget{
+						Dev: "hdb",
 					},
 				},
 			},
