@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+
 	libvirt "github.com/libvirt/libvirt-go"
 	libvirtxml "github.com/libvirt/libvirt-go-xml"
 )
 
 func listAllDomains() {
-	conn, err := libvirt.NewConnect("qemu:///system")
+	conn, err := libvirt.NewConnect("qemu+tcp://0.0.0.0:16509/system")
 	if err != nil {
 		panic(err)
 	}
@@ -19,7 +20,7 @@ func listAllDomains() {
 	conn.Close()
 }
 
-func domainDef() {
+func DomainDef() {
 	domcfg := &libvirtxml.Domain{}
 	xmldoc, err := domcfg.Marshal()
 	if err != nil {
@@ -49,7 +50,7 @@ func domainDef() {
 					Device: "disk",
 					Source: &libvirtxml.DomainDiskSource{
 						File: &libvirtxml.DomainDiskSourceFile{
-							File: "/home/whitebyte/libvirt-experiments/images/bionic-10.qcow2",
+							File: "/home/whitebyte/libvirt-experiments/images/kubernetes-control-plane.img.bkp",
 						},
 					},
 					Target: &libvirtxml.DomainDiskTarget{
@@ -67,11 +68,23 @@ func domainDef() {
 					Device: "cdrom",
 					Source: &libvirtxml.DomainDiskSource{
 						File: &libvirtxml.DomainDiskSourceFile{
-							File: "/home/whitebyte/libvirt-experiments/images/user-data.img",
+							File: "/home/whitebyte/libvirt-experiments/images/giri/seed.iso",
 						},
 					},
 					Target: &libvirtxml.DomainDiskTarget{
 						Dev: "hdb",
+					},
+				},
+			},
+			Interfaces: []libvirtxml.DomainInterface{
+				libvirtxml.DomainInterface{
+					Source: &libvirtxml.DomainInterfaceSource{
+						Network: &libvirtxml.DomainInterfaceSourceNetwork{
+							Network: "default",
+						},
+						Bridge: &libvirtxml.DomainInterfaceSourceBridge{
+							Bridge: "virbr0",
+						},
 					},
 				},
 			},
