@@ -29,14 +29,14 @@ func DomainDef() {
 	fmt.Printf("XML: %s\n", xmldoc)
 	bootOrder := uint(1)
 	domcfg = &libvirtxml.Domain{
-		Type: "qemu",
-		Name: "Eddie10",
+		Type: "kvm",
+		Name: "Eddie11",
 		Memory: &libvirtxml.DomainMemory{
-			Value: 4,
+			Value: 8,
 			Unit:  "GB",
 		},
 		VCPU: &libvirtxml.DomainVCPU{
-			Value: 2,
+			Value: 4,
 		},
 		OS: &libvirtxml.DomainOS{
 			Type: &libvirtxml.DomainOSType{
@@ -50,11 +50,12 @@ func DomainDef() {
 					Device: "disk",
 					Source: &libvirtxml.DomainDiskSource{
 						File: &libvirtxml.DomainDiskSourceFile{
-							File: "/home/whitebyte/libvirt-experiments/images/kubernetes-control-plane.img.bkp",
+							File: "/home/carbon/dev/go-projects/src/github.com/himani93/libvirt-go-examples/images/vm-images/vm2/base.qcow2",
 						},
 					},
 					Target: &libvirtxml.DomainDiskTarget{
-						Dev: "hda",
+						Dev: "vda",
+						Bus: "virtio",
 					},
 					Boot: &libvirtxml.DomainDeviceBoot{
 						Order: bootOrder,
@@ -68,11 +69,12 @@ func DomainDef() {
 					Device: "cdrom",
 					Source: &libvirtxml.DomainDiskSource{
 						File: &libvirtxml.DomainDiskSourceFile{
-							File: "/home/whitebyte/libvirt-experiments/images/giri/seed.iso",
+							File: "/home/carbon/dev/go-projects/src/github.com/himani93/libvirt-go-examples/images/vm-images/vm2/user-data.img",
 						},
 					},
 					Target: &libvirtxml.DomainDiskTarget{
-						Dev: "hdb",
+						Dev: "hda",
+						Bus: "ide",
 					},
 				},
 			},
@@ -85,6 +87,9 @@ func DomainDef() {
 						Bridge: &libvirtxml.DomainInterfaceSourceBridge{
 							Bridge: "virbr0",
 						},
+					},
+					Model: &libvirtxml.DomainInterfaceModel{
+						Type: "virtio",
 					},
 				},
 			},
